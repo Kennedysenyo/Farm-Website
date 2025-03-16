@@ -32,8 +32,8 @@ export default function OrderPage() {
     try {
       const response = await fetch("/api/order", {
         method: "POST",
-        body: JSON.stringify({ ...formData, productId }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, productId }),
       });
 
       if (!response.ok) {
