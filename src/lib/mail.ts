@@ -17,7 +17,7 @@ export const sendOrderEmail = async (to: string, orderDetails: any) => {
       <h2>Thank you for your order!</h2>
       <p>Your order details:</p>
       <ul>
-        <li><strong>Product:</strong> ${orderDetails.productId}</li>
+        <li><strong>Product:</strong> ${orderDetails.name}</li>
         <li><strong>Quantity:</strong> ${orderDetails.quantity}</li>
         <li><strong>Shipping Address:</strong> ${orderDetails.address}</li>
       </ul>

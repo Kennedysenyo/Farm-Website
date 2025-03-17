@@ -18,6 +18,8 @@ export async function GET() {
  }
 }
 
+
+// Get a specific product
 export async function POST(req: Request, ) {
   try {
     
@@ -29,10 +31,11 @@ export async function POST(req: Request, ) {
       return NextResponse.json({message: "Failed to Create Order"}, {status: 500})
     }
     
-    const product = await db.select().from(products).where(eq(orders.productId, productId))
+    const product = await db.select().from(products).where(eq(products.id, productId))
+    console.log(product)
 
     // Send Order Email to Client
-    await sendOrderEmail(email, {productId, quantity, address})
+    await sendOrderEmail(email, {name: product[0].name, quantity, address})
    
     return NextResponse.json(response, {status: 201});
   }catch (error) {

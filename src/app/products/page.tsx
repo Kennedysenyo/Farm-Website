@@ -1,15 +1,12 @@
 import Link from "next/link";
+import { db } from "@/db";
+import { products } from "@/db/schema";
 
-const products = [
-  { id: 1, name: "Mango Seedling", price: "$10", image: "/images/mango.jpg" },
-  { id: 2, name: "Pawpaw Seedling", price: "$8", image: "/images/pawpaw.jpg" },
-  { id: 3, name: "Coconut Seedling", price: "$12", image: "/images/coconut.jpg" },
-  { id: 4, name: "Pear Seedling", price: "$9", image: "/images/pear.jpg" },
-];
+export default async function ProductsPage() {
 
-export default function ProductsPage() {
+  const productsData = await db.select().from(products)
 
-  const productElements = products.map((product) => (
+  const productElements = productsData.map((product) => (
     <Link 
       key={product.id}
       href={`/products/${product.id}`} 
@@ -17,12 +14,12 @@ export default function ProductsPage() {
     >
       <div>
         <img
-          src={product.image}
+          src={product.imageUrl}
           alt={product.name}
           className="w-full h-40 object-cover rounded-md"
         />
         <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
-        <p className="text-green-600 font-bold">{product.price}</p>
+        <p className="text-green-600 font-bold">Ghc{product.price}</p>
         <button className="mt-3 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition cursor-pointer">
           Order Now
         </button>
