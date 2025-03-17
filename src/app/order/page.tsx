@@ -25,6 +25,7 @@ export default function OrderPage() {
     }));
   };
 
+  // Call the POST route in the order API
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);

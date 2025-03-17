@@ -1,7 +1,8 @@
 import {NextResponse} from "next/server";
 import { db } from "@/db";
-import { orders } from "@/db/schema";
-import nodemailer from "nodemailer";
+import { eq } from "drizzle-orm";
+import { orders, products} from "@/db/schema";
+import { sendOrderEmail } from "@/lib/mail";
 
 
 export async function GET() {
@@ -19,24 +20,20 @@ export async function GET() {
 
 export async function POST(req: Request, ) {
   try {
+    
     const {name, email, phone, address, quantity, productId} = await req.json();
+    
     const response = await db.insert(orders).values({name, email, phone, address, quantity, productId}).returning()
+    
     if (response.length === 0) {
       return NextResponse.json({message: "Failed to Create Order"}, {status: 500})
     }
+    
+    const product = await db.select().from(products).where(eq(orders.productId, productId))
 
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS}
-    })
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Order Confirmation",
-      text: `Hello ${name}, your order for ${quantity} units has been placed successfuly!.\nOur agent would call you to continue the process. Thank you.`
-    })
-
+    // Send Order Email to Client
+    await sendOrderEmail(email, {productId, quantity, address})
+   
     return NextResponse.json(response, {status: 201});
   }catch (error) {
     return NextResponse.json({message: "Failed to Create Order"}, {status: 500})
