@@ -19,7 +19,7 @@ export const sendOrderEmail = async (to: string, orderDetails: any) => {
       <ul>
         <li><strong>Product:</strong> ${orderDetails.name}</li>
         <li><strong>Quantity:</strong> ${orderDetails.quantity}</li>
-        <li><strong>Shipping Address:</strong> ${orderDetails.address}</li>
+        <li><strong>Delivery Address:</strong> ${orderDetails.address}</li>
       </ul>
       <p>We will process your order and update you soon.</p>
     `,

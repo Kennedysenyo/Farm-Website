@@ -33,7 +33,7 @@ export default function Updates() {
           </div>
         </div>
         <Link
-          href="/blog"
+          href="/updates"
           className="mt-6 primary-color-button"
         >
           Read More
