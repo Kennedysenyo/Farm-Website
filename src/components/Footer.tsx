@@ -16,7 +16,8 @@ export default function Footer() {
             <li><Link href="/" className="footer-links-hover">Home</Link></li>
             <li><Link href="/products" className="footer-links-hover">Products</Link></li>
             <li><Link href="/services" className="footer-links-hover">Services</Link></li>
-            <li><Link href="/blog" className="footer-links-hover">Blog</Link></li>
+            <li><Link href="/updates" className="footer-links-hover">Updates</Link></li>
+            <li><Link href="/about" className="footer-links-hover">About</Link></li>
             <li><Link href="/contact" className="footer-links-hover">Contact</Link></li>
           </ul>
         </div>

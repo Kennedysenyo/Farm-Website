@@ -20,3 +20,11 @@ export const orders = pgTable("orders", {
   productId: integer("product_id").references(() => products.id),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const consultation = pgTable("consultation", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  date: timestamp("date").notNull(),
+  message: text("message"),
+})

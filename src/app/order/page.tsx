@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function OrderPage() {
   const searchParams = useSearchParams();
-  const productId = searchParams.get("product") || ""; // Avoid sending null values
+  const productId = searchParams.get("product") || ""; 
 
   const [formData, setFormData] = useState({
     name: "",
@@ -14,14 +14,14 @@ export default function OrderPage() {
     quantity: 1,
   });
 
-  const [loading, setLoading] = useState(false); // Track submit status
+  const [loading, setLoading] = useState(false); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "quantity" ? parseInt(value) || 1 : value, // Ensure quantity is a number
+      [name]: name === "quantity" ? parseInt(value) || 1 : value, 
     }));
   };
 
@@ -109,7 +109,7 @@ export default function OrderPage() {
           type="text"
           name="address"
           onChange={handleChange}
-          value={formData.address} // Added missing value
+          value={formData.address} 
           required
           className="w-full border rounded-md p-2 mt-1 mb-3"
         />
@@ -122,7 +122,7 @@ export default function OrderPage() {
           type="number"
           name="quantity"
           onChange={handleChange}
-          value={formData.quantity} // Ensure number handling
+          value={formData.quantity}
           required
           min="1"
           className="w-full border rounded-md p-2 mt-1 mb-3"
@@ -130,7 +130,7 @@ export default function OrderPage() {
 
         <button
           type="submit"
-          disabled={loading} // Disable button while submitting
+          disabled={loading} 
           className={`w-full py-2 rounded-lg transition cursor-pointer ${
             loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700 text-white"
           }`}

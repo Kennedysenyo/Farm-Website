@@ -9,6 +9,7 @@ const navItems = [
   {name: "Products", href: "/products"},
   {name: "Services", href: "/services"},
   {name: "Updates", href: "/updates"},
+  {name: "About", href: "/about"},
   {name: "Contact", href: "/contact"},
 ];
 
