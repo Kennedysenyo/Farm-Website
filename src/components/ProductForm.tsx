@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import ImageUploader from "./ImageUploader";
+import { redirect } from "next/navigation";
+
 
 export default function ProductForm() {
   const [product, setProduct] = useState({
@@ -33,6 +35,7 @@ export default function ProductForm() {
         price: "",
         imageUrl: "",
       });
+      redirect("/admin/products")
     } else {
       alert("Error adding product!");
     }

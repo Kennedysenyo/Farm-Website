@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({message: "Consultation booked successfully!"}, {status: 201})
   }catch (error) {
-    console.error("Error booking consultation:", error);
+    console.error("Error booking consultations:", error);
     return NextResponse.json({error: "Internal Server Error"}, {status: 500})
   }
 }
