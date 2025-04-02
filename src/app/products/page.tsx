@@ -10,7 +10,7 @@ export default async function ProductsPage() {
     <Link 
       key={product.id}
       href={`/products/${product.id}`} 
-      className="border rounded-lg shadow-lg p-4"
+      className="border border-green-500 rounded-lg shadow-lg p-4"
     >
       <div>
         <img

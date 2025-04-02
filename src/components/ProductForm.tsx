@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import ImageUploader from "./ImageUploader";
+import ImageUploader from "@/components/ImageUploader";
 import { redirect } from "next/navigation";
 
 

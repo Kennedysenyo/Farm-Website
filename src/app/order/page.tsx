@@ -1,143 +1,113 @@
 "use client";
+import { useActionState } from "react";
+import { placeOrder, FormState } from "../../actions/orders";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
-export default function OrderPage() {
-  const searchParams = useSearchParams();
-  const productId = searchParams.get("product") || ""; 
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    quantity: 1,
-  });
+export default function OrdersPage() {
+  
+  const searchParams  = useSearchParams();
+  const productId = searchParams.get("product");
 
-  const [loading, setLoading] = useState(false); 
+  const initialState: FormState = {
+    error: {},
+    success: false,
+  }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "quantity" ? parseInt(value) || 1 : value, 
-    }));
-  };
-
-  // Call the POST route in the order API
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, productId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to place order. Please try again.");
-      }
-
-      alert("Order placed! A confirmation email will be sent.");
-      
-      // Reset form state
-      setFormData({ name: "", email: "", phone: "", address: "", quantity: 1 });
-    } catch (error ) {
-      if( error instanceof Error) {
-        console.error("Error submitting order:", error.message);
-        alert(error.message);
-      }else{
-        console.error("Unexpected error:", error);
-        alert("Something went wrong.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [ state, formAction, isPending ] = useActionState(
+    placeOrder.bind(null, productId),
+    initialState
+    ) 
 
   return (
     <div className="container mx-auto px-4 py-10 mb-40">
       <h1 className="text-3xl font-bold text-center mb-6">Place Your Order</h1>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto border rounded-lg shadow-lg p-6">
-        <label htmlFor="name" className="block text-gray-400 font-semibold">
-          Full Name:
-        </label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          onChange={handleChange}
-          value={formData.name}
-          required
-          className="w-full border rounded-md p-2 mt-1 mb-3"
-        />
+      <form action={formAction} className="max-w-md mx-auto border border-green-600 rounded-lg shadow-lg p-6 space-y-2">
 
-        <label htmlFor="email" className="block text-gray-400 font-semibold">
-          Email Address:
-        </label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          onChange={handleChange}
-          value={formData.email}
-          required
-          className="w-full border rounded-md p-2 mt-1 mb-3"
-        />
+        <div>
+          <label htmlFor="name" className="block text-gray-400 font-semibold">
+            Full Name:
+          </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            className="w-full border border-green-600 rounded-md p-2 mt-1 mb-3"
+          />
+          {
+            state.error.name && <p className="text-red-500">{state.error.name}</p>
+          }
+        </div>
 
-        <label htmlFor="phone" className="block text-gray-400 font-semibold">
-          Phone Number:
-        </label>
-        <input
-          id="phone"
-          type="tel"
-          name="phone"
-          onChange={handleChange}
-          value={formData.phone}
-          required
-          className="w-full border rounded-md p-2 mt-1 mb-3"
-        />
+        <div>
+          <label htmlFor="email" className="block text-gray-400 font-semibold">
+            Email Address:
+          </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            className="w-full border border-green-600 rounded-md p-2 mt-1 mb-3"
+          />
+          {
+            state.error.email && <p className="text-red-500">{state.error.email}</p>
+          }
+        </div>
 
-        <label htmlFor="address" className="block text-gray-400 font-semibold">
-          Delivery Address:
-        </label>
-        <input
-          id="address"
-          type="text"
-          name="address"
-          onChange={handleChange}
-          value={formData.address} 
-          required
-          className="w-full border rounded-md p-2 mt-1 mb-3"
-        />
+        <div>
+          <label htmlFor="phone" className="block text-gray-400 font-semibold">
+            Phone Number:
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            name="phone"
+            className="w-full border border-green-600 rounded-md p-2 mt-1 mb-3"
+          />
+          {
+            state.error.phone && <p className="text-red-500">{state.error.phone}</p>
+          }
+        </div>
 
-        <label htmlFor="quantity" className="block text-gray-400 font-semibold">
-          Quantity:
-        </label>
-        <input
-          id="quantity"
-          type="number"
-          name="quantity"
-          onChange={handleChange}
-          value={formData.quantity}
-          required
-          min="1"
-          className="w-full border rounded-md p-2 mt-1 mb-3"
-        />
+        <div>
+          <label htmlFor="address" className="block text-gray-400 font-semibold">
+            Delivery Address:
+          </label>
+          <input
+            id="address"
+            type="text"
+            name="address"
+            className="w-full border border-green-600 rounded-md p-2 mt-1 mb-3"
+            />
+          {
+            state.error.address && <p className="text-red-500">{state.error.address}</p>
+          }
+        </div>
+
+        <div>
+          <label htmlFor="quantity" className="block text-gray-400 font-semibold">
+            Quantity:
+          </label>
+          <input
+            id="quantity"
+            type="number"
+            name="quantity"
+            defaultValue={1}
+            min="1"
+            className="w-full border border-green-600 rounded-md p-2 mt-1 mb-3"
+          />
+        </div>
 
         <button
           type="submit"
-          disabled={loading} 
+          disabled={isPending} 
           className={`w-full py-2 rounded-lg transition cursor-pointer ${
-            loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700 text-white"
+            isPending ? "bg-gray-400" : "bg-green-600 hover:bg-green-700 text-white"
           }`}
         >
-          {loading ? "Processing..." : "Confirm Order"}
+          {isPending ? "Processing..." : "Confirm Order"}
         </button>
       </form>
     </div>
-  );
+  )
 }

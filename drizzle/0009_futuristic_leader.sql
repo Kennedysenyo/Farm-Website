@@ -1,0 +1,1 @@
+ALTER TABLE "consultation" RENAME TO "consultations";

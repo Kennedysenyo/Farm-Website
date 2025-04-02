@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Hero() {
   return(
     <section 
-      className="relative bg-cover bg-center h-[500px] flex items-center text-white"
+      className="relative bg-cover bg-center h-screen flex items-center text-white"
       style={{backgroundImage: "url('/images/mangotree.jpg')"}}
     
     >
