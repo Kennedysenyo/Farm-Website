@@ -1,6 +1,5 @@
 import { db } from "@/db";
 import { orders } from "@/db/schema";
-import { OrdersType } from "@/types/types"
 import { OrdersTable } from "./OrdersTable";
 import { notFound } from "next/navigation";
 

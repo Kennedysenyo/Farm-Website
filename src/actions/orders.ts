@@ -55,7 +55,6 @@ export async function placeOrder(
     quantity: parseInt(quantity),
     productId: parseInt(productId),
   });
-  console.log("Order created succefully");
 
   return {
     error: {},
