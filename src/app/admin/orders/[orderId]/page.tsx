@@ -1,8 +1,15 @@
+import { getProduct } from "@/actions/product";
+import { getOrderById } from "../../actions/orders";
+import Order from "./Order"
 
 
-export default function OrderDetailsPage({params}: {params: Promise<{id: string}>}) {
+export default async function OrderDetailsPage({params} : {params: Promise<{orderId: string}>}) {
 
-  return(
-    <></>
+  const orderId = (await params).orderId;
+  const order = await getOrderById(parseInt(orderId))
+  const product = await getProduct(order.productId)
+
+  return (
+    <Order order={order} product={product} />
   )
 }
