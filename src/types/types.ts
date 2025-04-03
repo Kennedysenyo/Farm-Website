@@ -15,7 +15,7 @@ export interface OrdersType {
   phone: string;
   address: string;
   quantity: number;
-  productId: number | null;
+  productId: number;
   status: string | null;
   createdAt: Date | null;
 }

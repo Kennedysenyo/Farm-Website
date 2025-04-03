@@ -1,3 +1,5 @@
+import { getProduct } from "@/actions/product";
+import { OrdersType } from "@/types/types";
 import nodemailer from "nodemailer";
 
 interface Options {
@@ -8,7 +10,10 @@ interface Options {
 }
 
 
-export const sendOrderEmail = async (to: string, orderDetails: any) => {
+export const sendOrderEmail = async (to: string, orderDetails: OrdersType) => {
+
+  const product = await getProduct(orderDetails.productId)
+
   const transporter = nodemailer.createTransport({
     service: "gmail", 
     auth: {
@@ -23,9 +28,10 @@ export const sendOrderEmail = async (to: string, orderDetails: any) => {
     subject: "Order Confirmation",
     html: `
       <h2>Thank you for your order!</h2>
+      <h3>${orderDetails.name},</h3>
       <p>Your order details:</p>
       <ul>
-        <li><strong>Product:</strong> ${orderDetails.name}</li>
+        <li><strong>Product:</strong> ${product.name}</li>
         <li><strong>Quantity:</strong> ${orderDetails.quantity}</li>
         <li><strong>Delivery Address:</strong> ${orderDetails.address}</li>
       </ul>

@@ -1,6 +1,7 @@
 "use server";
 import { db } from "@/db";
 import { orders } from "@/db/schema";
+import { sendOrderEmail } from "@/lib/mail";
 
 export interface MissingField {
   name?: string;
@@ -47,14 +48,17 @@ export async function placeOrder(
     }
   }
 
-  await db.insert(orders).values({
+  const order = await db.insert(orders).values({
     name, 
     email, 
     phone,
     address,
     quantity: parseInt(quantity),
     productId: parseInt(productId),
-  });
+  }).returning();
+
+
+  await sendOrderEmail(email, order[0])
 
   return {
     error: {},

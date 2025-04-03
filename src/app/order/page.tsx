@@ -14,12 +14,12 @@ export default function OrdersPage() {
     error: {},
     success: false,
   }
-
+  
   const [ state, formAction, isPending ] = useActionState(
     placeOrder.bind(null, productId),
     initialState
-    ) 
-
+  ) 
+  
   const [product, setProduct] = useState<ProductsType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -96,19 +96,18 @@ export default function OrdersPage() {
     <>
       <h1 className="text-3xl font-bold text-center mb-6">Place Your Order</h1>
 
-      {/* ✅ Product Details Section */}
       {product && (
         <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mb-6">
           <img src={product.imageUrl} alt={product.name} className="w-full h-56 object-cover" />
           <div className="p-5">
             <h2 className="text-2xl font-bold text-gray-800">{product.name}</h2>
             <p className="text-gray-600 mt-2">{product.description}</p>
-            <p className="text-green-700 font-semibold text-xl mt-2">${product.price}</p>
+            <p className="text-green-700 font-semibold text-xl mt-2">Ghc{product.price}</p>
           </div>
         </div>
       )}
 
-      {/* Order Form */}
+
       <form action={formAction} className="max-w-md mx-auto border border-green-600 rounded-lg shadow-lg p-6 space-y-2">
         <div>
           <label htmlFor="name" className="block text-gray-400 font-semibold">Full Name:</label>
